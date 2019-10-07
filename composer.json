@@ -1,0 +1,19 @@
+{
+  "name": "dazzle/mautic-sendinblue-bundle",
+  "description": "Allows to send E-mails with Sendinblue",
+  "type": "mautic-plugin",
+  "extra": {
+    "install-directory-name": "MauticSendinblueBundle"
+  },
+  "require": {
+    "mautic/composer-plugin": "^1.0.1",
+    "sendinblue/api-v3-sdk": "^6.1.4"
+  },
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "Dazzle",
+      "email": "info@dazzle.be"
+    }
+  ]
+}
