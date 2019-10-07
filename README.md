@@ -22,7 +22,7 @@ Navigate to the Plugins page and click "Install/Upgrade Plugins". You should now
 Navigate to the Configuration page and open Email Settings section. Set "Sendinblue - API" service to send email through and enter your Sendinblue API key (use v3).
 
 ### Webhooks
-1. Navigate to your Sendinblue account and open Webhook page in Transactional settings.
+1. Navigate to your Sendinblue account and open the Webhook page in Transactional settings.
 2. Add a new webhook:
     1. URL to call: https://SITENAME/mailer/sendinblue_api/callback
     2. Supported events:
