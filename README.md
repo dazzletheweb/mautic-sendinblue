@@ -7,15 +7,11 @@ This Plugin brings Sendinblue integration to Mautic 2.15.2 and newer.
 
 Licensed under GNU General Public License v3.0.
 
-## Installation via composer (preferred)
-Execute `composer require dazzle/mautic-sendinblue-bundle` in the main directory of the Mautic installation.
-
-## Installation via .zip
-1. Download the [master.zip](https://github.com/dazzletheweb/mautic-sendinblue/archive/master.zip), extract it into the `plugins/` directory and rename the new directory to `MauticSendinblueBundle`.
+## Installation via composer
+1. Execute `composer require dazzle/mautic-sendinblue-bundle` in the main directory of the Mautic installation.
 2. Clear the cache via console command `php app/console cache:clear --env=prod` (might take a while) *OR* manually delete the `app/cache/prod` directory.
 
 ## Configuration
-
 Navigate to the Plugins page and click "Install/Upgrade Plugins". You should now see a "Sendinblue integration" plugin.
 
 ### Emails
