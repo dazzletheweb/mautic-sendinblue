@@ -17,7 +17,6 @@ use SendinBlue\Client\Model\SendSmtpEmailSender;
 use SendinBlue\Client\Model\SendSmtpEmailTo;
 use SendinBlue\Client\Model\SendSmtpEmailCc;
 use SendinBlue\Client\Model\SendSmtpEmailBcc;
-use SplFileObject;
 use Swift_Message;
 use Swift_Mime_Message;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,18 +130,37 @@ class SendinblueApiTransport extends AbstractTokenArrayTransport implements \Swi
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $result = 0;
+        $smtpEmail = NULL;
         $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', $this->apiKey);
         $smtpApiInstance = new SMTPApi(new Client(), $config);
 
         try {
             $smtpEmail = $this->getSendinBlueEmail($message);
-            $response = $smtpApiInstance->sendTransacEmail($smtpEmail);
-
-            if ($response instanceof CreateSmtpEmail || $response instanceof SplFileObject) {
-                $result = 1;
-            }
         } catch (Exception $e) {
             $this->throwException($e->getMessage());
+        }
+
+        // Return 0 if the SendinBlue email couldn't be parsed.
+        if (!$smtpEmail instanceof SendSmtpEmail) {
+            return $result;
+        }
+
+        $recipients = $smtpEmail->getTo();
+
+        foreach ($recipients as $recipient) {
+            // Due to the fact that recipients shouldn't see other recipients
+            // in their emails we have to modify the recipients list.
+            $smtpEmail->setTo([$recipient]);
+
+            try {
+                $response = $smtpApiInstance->sendTransacEmail($smtpEmail);
+
+                if ($response instanceof CreateSmtpEmail) {
+                    $result++;
+                }
+            } catch (Exception $e) {
+                $this->throwException($e->getMessage());
+            }
         }
 
         return $result;
